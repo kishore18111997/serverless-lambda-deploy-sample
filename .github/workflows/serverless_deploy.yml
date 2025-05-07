@@ -18,6 +18,15 @@ jobs:
         with:
           node-version: '20'
 
+      - name: Install AWS CLI
+        run: sudo apt-get install -y awscli
+
+      - name: Get secrets from SSM
+        id: ssm
+        run: |
+          echo "USER_NAME=$(aws ssm get-parameter --name /serverless/user_name --with-decryption --query 'Parameter.Value' --output text)" >> $GITHUB_ENV
+          echo "PASSWORD=$(aws ssm get-parameter --name /serverless/password --with-decryption --query 'Parameter.Value' --output text)" >> $GITHUB_ENV
+      
       - name: Install Serverless
         run: npm install -g serverless@3
 

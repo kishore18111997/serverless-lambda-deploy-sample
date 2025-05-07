@@ -10,6 +10,9 @@ provider:
 functions:
   hello:
     handler: handler.hello
+    environment:
+      USER_NAME: ${env:USER_NAME}
+      PASSWORD: ${env:PASSWORD}
     events:
       - http:
           path: hello
